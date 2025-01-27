@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KhopadeTube</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.25);
+        }
+        body {
+            background: linear-gradient(135deg, #2b1055, #7597de);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+        .video-card {
+            transition: all 0.3s ease;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        .live-badge {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+        .shimmer {
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen overflow-x-hidden">
+    <header class="glass fixed w-full z-50 px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-6">
+            <button class="p-2 hover:bg-white/20 rounded-full transition-all">
+                <i class="bi bi-list text-2xl"></i>
+            </button>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-300 text-transparent bg-clip-text">
+                KhopadeTube
+            </h1>
+        </div>
+        <div class="flex-1 max-w-3xl mx-6">
+            <div class="relative">
+                <input type="search" placeholder="Search videos..." 
+                       class="w-full px-6 py-3 search-input rounded-full outline-none text-white placeholder-white/70 transition-all">
+                <button class="absolute right-2 top-1/2 -translate-y-1/2 p-2 hover:bg-white/20 rounded-full transition-all">
+                    <i class="bi bi-search text-lg"></i>
+                </button>
+            </div>
+        </div>
+        <div class="flex items-center gap-5">
+            <button class="p-3 hover:bg-white/20 rounded-full transition-all">
+                <i class="bi bi-camera-video text-xl"></i>
+            </button>
+            <button class="p-3 hover:bg-white/20 rounded-full transition-all">
+                <i class="bi bi-bell text-xl"></i>
+            </button>
+            <button class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center font-semibold">
+                K
+            </button>
+        </div>
+    </header>
+
+    <div class="flex h-screen pt-20">
+        <aside class="glass fixed w-72 h-[calc(100vh-5rem)] p-5 overflow-y-auto">
+            <nav class="space-y-3">
+                <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl">
+                    <i class="bi bi-house-door-fill text-xl"></i>
+                    <span class="font-medium">Home</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl">
+                    <i class="bi bi-play-circle-fill text-xl"></i>
+                    <span class="font-medium">Shorts</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl">
+                    <i class="bi bi-collection-play-fill text-xl"></i>
+                    <span class="font-medium">Subscriptions</span>
+                </a>
+                <hr class="border-white/20 my-4">
+                <h3 class="px-4 text-sm font-semibold text-white/70">LIBRARY</h3>
+                <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl">
+                    <i class="bi bi-clock-history text-xl"></i>
+                    <span class="font-medium">History</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl">
+                    <i class="bi bi-heart-fill text-xl"></i>
+                    <span class="font-medium">Liked Videos</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="ml-72 flex-1 p-6">
+            <div class="flex gap-4 mb-8 overflow-x-auto pb-3">
+                <button class="glass px-6 py-2 rounded-full font-medium hover:bg-white/20 transition-all">All</button>
+                <button class="glass px-6 py-2 rounded-full font-medium hover:bg-white/20 transition-all">Gaming</button>
+                <button class="glass px-6 py-2 rounded-full font-medium hover:bg-white/20 transition-all">Music</button>
+                <button class="glass px-6 py-2 rounded-full font-medium hover:bg-white/20 transition-all">Live</button>
+                <button class="glass px-6 py-2 rounded-full font-medium hover:bg-white/20 transition-all">Cooking</button>
+                <button class="glass px-6 py-2 rounded-full font-medium hover:bg-white/20 transition-all">Technology</button>
+            </div>
+
+            <div id="videoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Video cards will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Video data with more realistic content
+        const videoData = [
+            { title: "Building a Next.js App in 2024", creator: "TechPro", views: "1.2M", time: "3 days ago", category: "technology" },
+            { title: "Relaxing Lo-fi Music Mix", creator: "ChillBeats", views: "890K", time: "1 week ago", category: "music" },
+            { title: "Pro Gaming Tournament Finals", creator: "ESports Live", views: "2.1M", time: "5 hours ago", category: "gaming", live: true },
+            { title: "Easy 15-Minute Recipes", creator: "FoodMaster", views: "450K", time: "2 days ago", category: "cooking" },
+            { title: "Web Development Tips & Tricks", creator: "CodeMaster", views: "780K", time: "1 day ago", category: "technology" },
+            { title: "Classic Rock Hits Collection", creator: "MusicLegends", views: "1.5M", time: "4 days ago", category: "music" },
+            { title: "Minecraft Building Challenge", creator: "GamersUnite", views: "920K", time: "12 hours ago", category: "gaming" },
+            { title: "Healthy Breakfast Ideas", creator: "HealthyEats", views: "340K", time: "6 days ago", category: "cooking" }
+        ];
+
+        const videoGrid = document.getElementById('videoGrid');
+
+        // Generate video cards
+        videoData.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card glass overflow-hidden';
+            card.innerHTML = `
+                <div class="relative">
+                    <img src="https://source.unsplash.com/random/800x450?${video.category}" 
+                         alt="${video.title}" 
+                         class="w-full aspect-video object-cover">
+                    ${video.live ? '<span class="live-badge absolute bottom-2 right-2">LIVE</span>' : ''}
+                    <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-medium text-lg leading-tight">${video.title}</h3>
+                    <p class="text-sm text-white/70 mt-2 font-medium">${video.creator}</p>
+                    <div class="flex items-center gap-2 text-sm text-white/70 mt-1">
+                        <span>${video.views} views</span>
+                        <span>•</span>
+                        <span>${video.time}</span>
+                    </div>
+                </div>
+            `;
+            videoGrid.appendChild(card);
+        });
+
+        // Sidebar toggle
+        const menuBtn = document.querySelector('.bi-list').parentElement;
+        const aside = document.querySelector('aside');
+        const main = document.querySelector('main');
+
+        menuBtn.addEventListener('click', () => {
+            aside.classList.toggle('-translate-x-full');
+            main.classList.toggle('ml-72');
+            main.classList.toggle('ml-0');
+        });
+
+        // Responsive sidebar
+        function checkWidth() {
+            if (window.innerWidth < 768) {
+                aside.classList.add('-translate-x-full');
+                main.classList.remove('ml-72');
+                main.classList.add('ml-0');
+            } else {
+                aside.classList.remove('-translate-x-full');
+                main.classList.add('ml-72');
+                main.classList.remove('ml-0');
+            }
+        }
+
+        window.addEventListener('resize', checkWidth);
+        checkWidth();
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
